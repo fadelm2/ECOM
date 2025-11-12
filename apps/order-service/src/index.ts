@@ -1,6 +1,9 @@
 import  Fastify from 'fastify'
+import {clerkPlugin, getAuth} from "@clerk/fastify";
 
-const fastify = Fastify();
+const fastify = Fastify({ logger: true })
+
+fastify.register(clerkPlugin)
 
 fastify.get("/", (request, reply)=> {
     return reply.send("Order endpoint works!")
@@ -13,6 +16,17 @@ fastify.get("/health", (request, reply) => {
         timestamp: Date.now(),
     });
 });
+
+fastify.get("/test", (request, reply) => {
+    const {userId} = getAuth(request);
+    if(!userId) {
+        return res.status(401).json({message : "You are not logged in"});
+    }
+    return reply.send({message : "Order service is authenticated!"})
+})
+
+
+
 const start = async () => {
     try {
         await fastify.listen({port: 8001});

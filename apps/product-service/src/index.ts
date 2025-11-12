@@ -1,10 +1,12 @@
-import express, {Request, Response} from "express";
+import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import {clerkMiddleware} from "@clerk/express";
 import {shouldBeUser} from "./middleware/authMiddleware.js";
+import categoryRouter from "./routes/category.route";
+import productRouter from "./routes/product.route";
 
 const app = express();
-
+app.use(express.json());
 
 app.use(
     cors({
@@ -30,6 +32,15 @@ app.get("/health", (req: Request, res: Response) => {
 app.get("/test", shouldBeUser, (req, res) => {
     res.json({message : " Product service authenticated", userId: req.userId});
 })
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    console.log(err);
+    return res
+        .status(err.status || 500)
+        .json({ message: err.message || "Inter Server Error!" });
+});
+
+app.use("/categories", categoryRouter);
+app.use("/products", productRouter);
 
 
 app.listen(8000, ()=> {

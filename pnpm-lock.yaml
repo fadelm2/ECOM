@@ -197,7 +197,7 @@ importers:
   apps/order-service:
     dependencies:
       '@clerk/fastify':
-        specifier: ^2.4.30
+        specifier: ^2.6.0
         version: 2.6.0(fastify@5.6.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       date-fns:
         specifier: ^4.1.0
@@ -221,13 +221,19 @@ importers:
 
   apps/payment-service:
     dependencies:
+      '@hono/clerk-auth':
+        specifier: ^3.0.3
+        version: 3.0.3(hono@4.10.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@hono/node-server':
-        specifier: ^1.19.6
+        specifier: ^1.19.0
         version: 1.19.6(hono@4.10.5)
       hono:
-        specifier: ^4.10.5
+        specifier: ^4.9.6
         version: 4.10.5
     devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/typescript-config
       '@types/node':
         specifier: ^20.11.17
         version: 20.19.24
@@ -241,7 +247,7 @@ importers:
   apps/product-service:
     dependencies:
       '@clerk/express':
-        specifier: ^1.7.30
+        specifier: ^1.7.48
         version: 1.7.48(express@5.1.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       cors:
         specifier: ^2.8.5
@@ -615,6 +621,12 @@ packages:
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
+
+  '@hono/clerk-auth@3.0.3':
+    resolution: {integrity: sha512-N671mw3ulvxqxY8ou8D8ojVT7EKljXE6RjdC2egWExMcrQAglMSTvqvU096MbOT5zvWtc8QMo3SKiyTXn30BrQ==}
+    engines: {node: '>=16.x.x'}
+    peerDependencies:
+      hono: '>=3.0.0'
 
   '@hono/node-server@1.19.6':
     resolution: {integrity: sha512-Shz/KjlIeAhfiuE93NDKVdZ7HdBVLQAfdbaXEaoAVO3ic9ibRSLGIQGkcBbFyuLr+7/1D5ZCINM8B+6IvXeMtw==}
@@ -3635,6 +3647,15 @@ snapshots:
       react-dom: 19.2.0(react@19.2.0)
 
   '@floating-ui/utils@0.2.10': {}
+
+  '@hono/clerk-auth@3.0.3(hono@4.10.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
+    dependencies:
+      '@clerk/backend': 2.21.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@clerk/types': 4.99.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      hono: 4.10.5
+    transitivePeerDependencies:
+      - react
+      - react-dom
 
   '@hono/node-server@1.19.6(hono@4.10.5)':
     dependencies:

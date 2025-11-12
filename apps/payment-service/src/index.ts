@@ -1,8 +1,10 @@
-import {serve} from '@hono/node-server'
 import {Hono} from 'hono'
 import * as process from "node:process";
+import {shouldBeUser} from "./middleware/authMiddleware.js";
+import {serve} from "@hono/node-server";
+import {clerkMiddleware} from "@hono/clerk-auth";
 
-const app = new Hono()
+const app = new Hono();
 
 app.get('/', (c) => {
     return c.text('Payment End Point works!')
@@ -13,6 +15,14 @@ app.get("/health", (c) => {
         status: "ok",
         uptime: process.uptime(),
         timestamp: Date.now(),
+    });
+});
+app.use("*", clerkMiddleware());
+//
+app.get('/test',shouldBeUser, (c) => {
+
+    return c.json({
+        message: " Payment service is Authentication!", userId: c.get("userId")
     });
 });
 

@@ -3,6 +3,7 @@ import cors from "cors";
 import {clerkMiddleware} from "@clerk/express";
 import {shouldBeUser} from "./middleware/authMiddleware.js";
 import categoryRouter from "./routes/category.route";
+import productRouter from "./routes/product.route";
 
 const app = express();
 app.use(express.json());
@@ -39,6 +40,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use("/categories", categoryRouter);
+app.use("/products", productRouter);
 
 
 app.listen(8000, ()=> {

@@ -30,6 +30,8 @@ const TestPage = async () => {
     const dataPayment = await resPayment.json();
 
     console.log(dataPayment);
+    console.log(dataProduct);
+    console.log(dataOrder);
     return (<div className="">Test Page</div>)
 }
 

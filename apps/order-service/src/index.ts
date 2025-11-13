@@ -1,6 +1,9 @@
 import  Fastify from 'fastify'
 import {clerkPlugin, getAuth} from "@clerk/fastify";
 import {shouldBeUser} from "./middleware/authMiddleware.js";
+import {connectOrderDB} from "@repo/order-db";
+import {orderRouter} from "./routes/order";
+import cors from "@fastify/cors";
 
 const fastify = Fastify({ logger: true })
 
@@ -17,6 +20,7 @@ fastify.get("/health", (request, reply) => {
         timestamp: Date.now(),
     });
 });
+fastify.register(orderRouter);
 
 fastify.get("/test", { preHandler: shouldBeUser }, (request, reply) => {
     return reply.send({
@@ -28,9 +32,11 @@ fastify.get("/test", { preHandler: shouldBeUser }, (request, reply) => {
 
 const start = async () => {
     try {
+        await connectOrderDB();
         await fastify.listen({port: 8001});
         console.log('Order service is running on port 8001');
     } catch (error) {
+        console.log(error)
         fastify.log.error(error);
         process.exit(1);
     }

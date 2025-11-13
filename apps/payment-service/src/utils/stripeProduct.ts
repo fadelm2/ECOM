@@ -1,0 +1,38 @@
+import {StripeProductType} from "@repo/types";
+import stripe from "./stripe"
+
+export const CreateStripeProduct = async (item: StripeProductType) => {
+    try {
+        const res = await stripe.products.create({
+            id: item.id,
+            name: item.name,
+            default_price_data: {
+                currency: "usd",
+                unit_amount: item.price * 100,
+            }
+        });
+        return res;
+    } catch (err) {
+        console.log(err)
+    }
+};
+
+
+export const getStripeProduct = async (productId: number) => {
+    try {
+        const res = await stripe.prices.list({
+            product: productId.toString(),
+        });
+        return res.data[0]?.unit_amount;
+    } catch (err) {
+        console.log(err)
+    }
+};
+
+export const deleteStripeProduct = async (productId: number) => {
+    try {
+        const res = await  stripe.products.del(productId.toString());
+    }catch (error) {
+        console.log(error)
+    }
+}

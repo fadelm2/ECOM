@@ -3,20 +3,20 @@ import { prisma, Prisma } from "@repo/product-db";
 
 export const createProduct = async (req: Request, res: Response) => {
     const data: Prisma.ProductCreateInput = req.body;
-    const { id } = data;
-
-    if (id) {
-        const existingProduct = await prisma.product.findUnique({
-            where: { id },
-        });
-
-        if (existingProduct) {
-            return res.status(400).json({
-                error: true,
-                message: `Product with ID ${id} already exists.`,
-            });
-        }
-    }
+    // const { id } = data;
+    //
+    // if (id) {
+    //     const existingProduct = await prisma.product.findUnique({
+    //         where: { id },
+    //     });
+    //
+    //     if (existingProduct) {
+    //         return res.status(400).json({
+    //             error: true,
+    //             message: `Product with ID ${id} already exists.`,
+    //         });
+    //     }
+    // }
 
 
     const { colors, images } = data;

@@ -5,6 +5,7 @@ import {serve} from "@hono/node-server";
 import {clerkMiddleware} from "@hono/clerk-auth";
 import { cors } from "hono/cors";
 import sessionRoute from "./routes/session.routes";
+import stripe from "./utils/stripe"
 
 const app = new Hono();
 app.use("*", clerkMiddleware());
@@ -32,7 +33,8 @@ app.get('/test',shouldBeUser, (c) => {
 
 app.route("/sessions", sessionRoute);
 
-// app.post("/create-stripe-product", shoulBeUser, async (c) => {
+// app.post("/create-stripe-product",
+//     async (c) => {
 //     const res = await stripe.products.create({
 //         id:"123",
 //         name: "Test Product",

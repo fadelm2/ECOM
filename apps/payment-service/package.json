@@ -13,6 +13,7 @@
     "hono": "^4.9.6"
   },
   "devDependencies": {
+    "@repo/types": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^20.11.17",
     "tsx": "^4.7.1",

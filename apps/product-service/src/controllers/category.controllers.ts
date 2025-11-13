@@ -4,14 +4,58 @@ import {prisma, Prisma} from "@repo/product-db";
 export const createCategory = async (req: Request, res: Response) => {
     const data: Prisma.CategoryCreateInput = req.body;
 
-    const category = await prisma.category.create({ data });
+    const category = await prisma.category.create({data});
     res.status(201).json(category);
 };
 export const updateCategory = async (req: Request, res: Response) => {
+    const {id} = req.params;
+    const data: Prisma.CategoryUpdateInput = req.body;
+
+    const categoryId = Number(id);
+
+    const existingCategory = await prisma.product.findUnique({
+        where: {id: categoryId},
+    });
+
+    if (!existingCategory) {
+        return res.status(404).json({
+            error: true,
+            message: `Product with ID ${categoryId} not found.`,
+        });
+    }
+    const category = await prisma.category.update({
+        where: {id: Number(id)},
+        data,
+    });
+
+    return res.status(200).json(category);
 };
 export const deleteCategory = async (req: Request, res: Response) => {
+    const {id} = req.params;
+
+    const categoryId = Number(id);
+    const existingCategory = await prisma.product.findUnique({
+        where: {id: categoryId},
+    });
+
+    if (!existingCategory) {
+        return res.status(404).json({
+            error: true,
+            message: `Product with ID ${categoryId} not found.`,
+        });
+    }
+    const category = await prisma.category.delete({
+        where: {id: Number(id)},
+    });
+
+    return res.status(200).json(category);
+
 };
-export const getCategorys = async (req: Request, res: Response) => {
-};
-export const getCategory = async (req: Request, res: Response) => {
-};
+export const getCategories = async (req: Request, res: Response) => {
+    const categories = await prisma.category.findMany();
+
+    return res.status(200).json(categories);
+}
+
+
+

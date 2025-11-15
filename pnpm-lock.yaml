@@ -214,6 +214,9 @@ importers:
       '@fastify/cors':
         specifier: ^11.1.0
         version: 11.1.0
+      '@repo/kafka':
+        specifier: workspace:*
+        version: link:../../packages/kafka
       '@repo/order-db':
         specifier: workspace:*
         version: link:../../packages/order-db
@@ -279,6 +282,9 @@ importers:
       '@clerk/express':
         specifier: ^1.7.48
         version: 1.7.48(express@5.1.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@repo/kafka':
+        specifier: workspace:*
+        version: link:../../packages/kafka
       '@repo/product-db':
         specifier: workspace:*
         version: link:../../packages/product-db

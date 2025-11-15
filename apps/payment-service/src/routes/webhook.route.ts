@@ -1,6 +1,7 @@
 import {Hono} from "hono";
 import stripe from "../utils/stripe";
 import Stripe from "stripe";
+import {producer} from "../utils/kafka";
 
 
 
@@ -39,19 +40,20 @@ webhookRoute.post("/stripe", async (c) => {
         );
         // // TODO: CREATE ORDER
         console.log("WEBHOOK RECIEVED", session);
-        // producer.send("payment.successful", {
-        //     value: {
-        //         userId: session.client_reference_id,
-        //         email: session.customer_details?.email,
-        //         amount: session.amount_total,
-        //         status: session.payment_status === "paid" ? "success" : "failed",
-        //         products: lineItems.data.map((item) => ({
-        //             name: item.description,
-        //             quantity: item.quantity,
-        //             price: item.price?.unit_amount,
-        //         })),
-        //     },
-        // });
+        // TODO: CREATE ORDER
+        producer.send("payment.successful", {
+            value: {
+                userId: session.client_reference_id,
+                email: session.customer_details?.email,
+                amount: session.amount_total,
+                status: session.payment_status === "paid" ? "success" : "failed",
+                products: lineItems.data.map((item) => ({
+                    name: item.description,
+                    quantity: item.quantity,
+                    price: item.price?.unit_amount,
+                })),
+            },
+        });
 
         break;
 

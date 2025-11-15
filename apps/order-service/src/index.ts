@@ -4,6 +4,8 @@ import {shouldBeUser} from "./middleware/authMiddleware.js";
 import {connectOrderDB} from "@repo/order-db";
 import {orderRouter} from "./routes/order";
 import cors from "@fastify/cors";
+import {runKafkaSubscriptions} from "./utils/subscriptions";
+import {consumer, producer} from "./utils/kafka";
 
 const fastify = Fastify({ logger: true })
 
@@ -32,9 +34,14 @@ fastify.get("/test", { preHandler: shouldBeUser }, (request, reply) => {
 
 const start = async () => {
     try {
-        await connectOrderDB();
-        await fastify.listen({port: 8001});
-        console.log('Order service is running on port 8001');
+        Promise.all([
+            await connectOrderDB(),
+            await producer.connect(),
+            await consumer.connect(),
+        ]);
+        await runKafkaSubscriptions();
+        await fastify.listen({ port: 8001 });
+        console.log("Order service is running on port 8001");
     } catch (error) {
         console.log(error)
         fastify.log.error(error);

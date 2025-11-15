@@ -7,7 +7,7 @@ import Filter from "./Filter";
 // TEMPORARY
 const products: ProductsType = [
     {
-        id: 123,
+        id: 1234,
         name: "Adidas CoreFit T-Shirt",
         shortDescription:
             "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",

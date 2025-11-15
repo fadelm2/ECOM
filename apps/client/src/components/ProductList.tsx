@@ -26,7 +26,7 @@ const products: ProductsType = [
         updatedAt: new Date()
     },
     {
-        id: 2,
+        id: 123,
         name: "Puma Ultra Warm Zip",
         shortDescription:
             "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",

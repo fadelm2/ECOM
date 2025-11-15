@@ -21,7 +21,19 @@ export const createProduct = async (req: Request, res: Response) => {
     // }
 
 
-    const { colors, images } = data;
+    const { categorySlug ,colors, images } = data;
+
+
+    const existingCategory = await prisma.category.findUnique({
+        where: { slug: categorySlug },
+    });
+
+    if (!existingCategory) {
+        return res.status(404).json({
+            error: true,
+            message: `Category with Name ${categorySlug} does not exist.`,
+        });
+    }
     if (!colors || !Array.isArray(colors) || colors.length === 0) {
         return res.status(400).json({ message: "Colors array is required!" });
     }

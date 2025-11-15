@@ -6,7 +6,7 @@ import { producer } from "../utils/kafka";
 const router: Router = Router();
 
 router.get("/", async (req, res) => {
-    const users = await clerk.users.getUserList();
+    const users = await clerkClient.users.getUserList();
     res.status(200).json(users)
 })
 

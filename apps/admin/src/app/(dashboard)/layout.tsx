@@ -3,6 +3,8 @@ import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
+import { ToastContainer } from "react-toastify";
+import QueryProvider from "@/components/providers/QueryProvider";
 
 export default async function RootLayout({
                                            children,
@@ -13,7 +15,9 @@ export default async function RootLayout({
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
 
   return (
-        <div className="flex">
+      <QueryProvider>
+
+      <div className="flex">
           <ThemeProvider
               attribute="class"
               defaultTheme="system"
@@ -29,6 +33,7 @@ export default async function RootLayout({
             </SidebarProvider>
           </ThemeProvider>
         </div>
-
+          <ToastContainer position="bottom-right" />
+      </QueryProvider>
   );
 }

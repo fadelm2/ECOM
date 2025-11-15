@@ -43,14 +43,17 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 app.use("/categories", categoryRouter);
 app.use("/products", productRouter);
 
-
-app.listen(8000, async ()=> {
+const start = async () => {
     try {
         Promise.all([await producer.connect(), await consumer.connect()]);
-        console.log("Product service is running on port 8000")
-
-    }catch (err) {
-        console.log(err);
+        app.listen(8000, () => {
+            console.log("Product service is running on 8000");
+        });
+    } catch (error) {
+        console.log(error);
         process.exit(1);
     }
-})
+};
+
+start()
+

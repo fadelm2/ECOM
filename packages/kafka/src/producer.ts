@@ -1,4 +1,5 @@
-import {Kafka ,Producer} from "kafkajs";
+
+import type { Kafka, Producer } from "kafkajs";
 
 
 export const createProducer = (kafka: Kafka) => {
@@ -6,18 +7,18 @@ export const createProducer = (kafka: Kafka) => {
 
     const connect = async () => {
         await producer.connect();
-    }
-
+    };
     const send = async (topic: string, message: object) => {
         await producer.send({
             topic,
-            messages: [{value: JSON.stringify(message)}]
+            messages: [{ value: JSON.stringify(message) }],
         });
     };
 
-    const disconnect = async ()=> {
+    const disconnect = async () => {
         await producer.disconnect();
-    }
+    };
 
-    return {connect, send, disconnect };
-}
+    return { connect, send, disconnect };
+};
+

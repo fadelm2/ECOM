@@ -17,7 +17,8 @@ export const orderRouter = async (fastify: FastifyInstance) => {
         "/orders",
         {preHandler: shouldBeAdmin},
         async (request, reply) => {
-            const orders = await Order.find();
+            const { limit } = request.query as {limit : number}
+            const orders = await Order.find().limit(limit);
             return reply.send(orders);
         }
     );

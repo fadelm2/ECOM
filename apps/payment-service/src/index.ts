@@ -10,6 +10,7 @@ import webhookRoute from "./routes/webhook.route";
 import { runKafkaSubscriptions } from "./utils/subscriptions.js";
 import {consumer, producer} from "./utils/kafka";
 
+
 const app = new Hono();
 app.use("*", clerkMiddleware());
 app.use("*", cors({ origin: ["http://localhost:3002"] }));

@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import stripe from "../utils/stripe";
 import { producer } from "../utils/kafka";
 
+
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
 const webhookRoute = new Hono();
 
@@ -54,6 +55,9 @@ webhookRoute.post("/stripe", async (c) => {
 
         default:
             break;
+ 
+    default:
+        break;
     }
     return c.json({ received: true });
 });

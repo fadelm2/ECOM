@@ -3,6 +3,7 @@ import { prisma, Prisma } from "@repo/product-db";
 import { producer } from "../utils/kafka";
 import { StripeProductType } from "@repo/types";
 
+
 export const createProduct = async (req: Request, res: Response) => {
     const data: Prisma.ProductCreateInput = req.body;
     // const { id } = data;
@@ -46,6 +47,7 @@ export const createProduct = async (req: Request, res: Response) => {
     };
 
     producer.send("product.created", { value: stripeProduct });
+
     res.status(201).json(product);
 };
 

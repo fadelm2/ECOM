@@ -1,4 +1,6 @@
+
 import type { Kafka, Producer } from "kafkajs";
+
 
 export const createProducer = (kafka: Kafka) => {
     const producer: Producer = kafka.producer();
@@ -19,3 +21,4 @@ export const createProducer = (kafka: Kafka) => {
 
     return { connect, send, disconnect };
 };
+
